@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/cubit/weather_cubit/weather_cubit.dart';
 import 'package:weatherapp/pages/home.dart';
 import 'package:weatherapp/pages/search_Page.dart';
 import 'package:provider/provider.dart';
 import 'package:weatherapp/providers/weather_provider.dart';
+import 'package:weatherapp/services/weather_services.dart';
 
 import 'models/weather_models.dart';
 void main() {
-  runApp( ChangeNotifierProvider(
+  runApp( BlocProvider(
     create: (context) {
-       return WeatherProvider();
+       return WeatherCubit(WeatherServices());
     },
     child: MyApp()));
 }
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       
       theme: ThemeData(
        
-        primarySwatch: Provider.of<WeatherProvider>(context).weatherModels==null?Colors.blue:Provider.of<WeatherProvider>(context).weatherModels!.getThemeColor(),
+        primarySwatch: BlocProvider.of<WeatherCubit>(context).weatherModels==null?Colors.blue:BlocProvider.of<WeatherCubit>(context).weatherModels!.getThemeColor(),
       ),
       home:  HomePage(), 
     );
